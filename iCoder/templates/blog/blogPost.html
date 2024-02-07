@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+
+{%load humanize%}
+{%load extras%}
+{%block title%}
+BlogPost
+{%endblock%}
+
+{%block css%}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/blogpost.css">
+{%endblock%}
+
+{%block body%}
+<div class="container contain">
+ <div class="cont">
+  <img src="/media/{{post.image}}" alt="alter"></img>
+ </div>
+</div>
+
+ <div class="container my-4">
+    <div>
+    
+        <h1 class="head my-4">{{post.title}}</h1>
+        <h5 class="head my-4">{{post.title}}</h5>
+    </div>
+
+    
+
+    
+      <div class="content">
+            <div class="userimg">
+               <img src="/media/{{post.userimage}}" />
+               <h5><a href="/about">{{post.author}}</a></h5>
+            </div>
+            <div class="date">
+              <i class="fa-solid fa-clock"></i>
+              <p>{{post.timestamp}}</p>
+            </div>
+      </div>
+  
+
+    <hr>
+
+    <div class="para">{{post.content|safe}}</div>
+ </div>
+
+
+ <!--col-md-10 md-2 row col bg-success bg-primary all used here <b></b>-->
+
+<div class="container">
+  <h2 class="head my-2">Comments ({{comments.count}})</h2>
+  
+  <div class="my-2">
+  {% if user.is_authenticated %}
+  <form action="/blog/postComment/" method="POST" >{% csrf_token %}
+
+    <div class="mb-3 my-4">
+    <label for="comment" class="form-label">Post Comment</label>
+    <input placeholder="Enter comment here" type="text" name="comment" class="form-control" id="comment">
+    </div>
+    <input type="hidden" name="postSno" value="{{post.sno}}" >
+    <input type="hidden" name="parentSno" value="" >
+    <button type="submit" class="btn btn-primary" >Submit</button>
+  </form>
+  {%else%}
+  
+  <p>Please login to post a comment...</p>
+  
+  {%endif%}
+
+  </div>
+  
+  <hr>
+
+  {% for comment in comments %}
+  <div class="comm">
+  <div class="dic">
+    <img src="/static/css/user.jpg" alt="image"> </img>
+    <h5>{{comment.user.username}}</h5>
+    <p style="margin-bottom:8px; font-size:14px;">{{comment.timestamp | naturaltime}}</p>
+  </div>
+  <div class="comment">
+  <p>{{comment.comment}}</p>
+
+  {%if user.is_authenticated%}
+   <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#reply{{comment.sno}}" aria-expanded="false" aria-controls="collapseExample">
+    Reply
+  </button>
+<div class="collapse" id="reply{{comment.sno}}">
+  <div class="card card-body my-2" style="margin-left:55px;">
+    
+    <form action="/blog/postComment/" method="POST" >{% csrf_token %}
+    <div class="mb-3 my-4">
+    <label for="comment" class="form-label">Reply the Comment</label>
+    <input placeholder="Enter reply here" type="text" name="comment" class="form-control" id="comment">
+    <input type="hidden" name="parentSno" value="{{comment.sno}}" >  
+  
+  </div>
+    <input type="hidden" name="postSno" value="{{post.sno}}" >
+    <button type="submit" class="btn btn-primary" >Submit</button>
+  </form>
+
+  </div>
+</div>
+
+{%else%}
+
+ <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#reply{{comment.sno}}" aria-expanded="false" disabled aria-controls="collapseExample">
+   Login to Reply
+  </button>
+
+
+{%endif%}
+
+<div class="replies my-3" style="margin-left:53px;">
+
+  {% for reply in replyDict|get_val:comment.sno%}
+
+  <div class="dic" style="margin-top:4px;">
+     
+    <h5>{{reply.user.username}}</h5>
+    <p style="margin-bottom:8px; font-size:14px;">{{reply.timestamp | naturaltime}}</p>
+  </div>
+  <p style="margin-bottom:0px; margin-top:-6px;">{{reply.comment}}</p>
+ 
+
+  {%endfor%}
+</div>
+
+
+  </div>
+
+ </div>
+ <hr style="margin-top:10px;">
+ {%endfor%}
+</div>
+
+{%endblock%}

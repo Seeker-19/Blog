@@ -1,0 +1,93 @@
+{%extends 'base.html' %}
+{%load static%}
+{%block title%}
+Home
+{%endblock%}
+
+{%block css%}
+<link rel="stylesheet" href="{%static "css/home.css" %}">
+{%endblock%}
+
+{%block homeactive%}
+active
+{%endblock homeactive%}
+
+{%block body%}
+<!--this is heading.-->
+<!-- home -->
+<div class="container contain">
+ <div class="cont">
+  <img src="/static/media/blog.jpg" alt="alter"></img>
+  <div class="ele">
+    <h1>Welcome To Icoder</h1>
+    <h4>The world of Writing awaits you</h4>
+    <a class="btn btn-primary" href="/blog">Go to Blog</a> 
+<!--role='button'-->
+</div>
+ </div>
+
+ 
+
+
+</div>
+
+<div >
+    
+    <div class="heading">
+    <h2>Popular Blogposts</h2>
+    </div>
+    <div class="mine">
+    <div class="col-md-6 post ">
+      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+          <strong class="d-inline-block mb-2 text-primary-emphasis">Django</strong>
+          <h3 class="mb-0">Let's Learn</h3>
+          <div class="mb-1 text-body-secondary"></div>
+          <p class="card-text mb-auto">Django is the language used in backend technologies for tech geeks and enthusiasts.</p>
+          <a href="/blog" class="icon-link gap-1 icon-link-hover stretched-link">
+            Continue reading
+    
+          </a>
+        </div>
+        
+      </div>
+    </div>
+    <div class="col-md-6 post my-4">
+      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+          <strong class="d-inline-block mb-2 text-primary-emphasis">Chatgpt</strong>
+          <h3 class="mb-0">Artificial Intelligence</h3>
+          <div class="mb-1 text-body-secondary"></div>
+          <p class="card-text mb-auto">ChatGPT is built upon the GPT (Generative Pre-trained Transformer) architecture, a state-of-the-art deep learning model. What sets ChatGPT apart is its ability to generate human-like text responses based on the input it receives. Trained on a diverse range of internet text, this model can understand and generate contextually relevant responses across a wide array of topics.</p>
+          <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
+            Continue reading
+    
+          </a>
+        </div>
+        
+      </div>
+    </div>
+
+    
+    </div>
+
+    {% if user.is_authenticated%}
+    <div class="buttonpost" style="margin-left:45%; margin-bottom:15px;">
+    <a href="/blog/form" class="btn btn-primary">Create Post with Icoder</a>
+    </div>
+
+    {%else%}
+    <div class="buttonpost disabled" style="margin-left:45%; margin-bottom:15px;">
+    <button disabled class=
+    "btn btn-primary">Create Post with Icoder</button>
+    </div>
+
+    {%endif%}
+  
+</div>
+
+
+
+
+
+{%endblock%}

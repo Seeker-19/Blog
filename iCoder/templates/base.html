@@ -1,0 +1,215 @@
+<!--this is html page-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{%block title%} {% endblock %}</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    {%block css%} {%endblock%}
+    <script src="https://kit.fontawesome.com/992c1d05bf.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">iCoder</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a
+                class="nav-link {%block homeactive%} {%endblock homeactive%}"
+                aria-current="page"
+                href="/"
+                >Home</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link {%block aboutactive%} {%endblock aboutactive%}"
+                href="/about"
+                >About</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link {%block contactactive%} {%endblock contactactive%}"
+                href="/contact"
+                >Contact</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link {%block blogactive%} {%endblock blogactive%}"
+                href="/blog"
+                >Blog</a
+              >
+            </li>
+          </ul>
+
+    
+          <form class="d-flex mx-3" role="search" method="GET" action="/search">
+            <input
+              class="form-control me-2"
+              type="search"
+              name="query"
+              id="query"
+              placeholder="Search"
+              aria-label="Search"
+            />
+            <button class="btn btn-outline-success" type="submit">
+              Search
+            </button>
+          </form>
+          {% comment %} <a
+            href="/admin"
+            role="button"
+            class="btn btn-outline-success m-2"
+            target="_blank"
+            >Admin</a
+          > {% endcomment %}
+
+          {% if user.is_authenticated %}
+          <ul class="navbar-nav">
+           <li class="nav-item dropdown" style="margin-right:30px;">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Welcome {{request.user}}
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="/logout">Logout</a>
+           
+          </div>
+        </li>
+      </ul>
+          {%else%}
+          <button type="button " class="btn btn-primary my-2 mr-2 mx-2" data-bs-toggle="modal" data-bs-target="#signupmodal">
+            Signup</button>
+          <button type="button " class="btn btn-primary my-2 mr-2 mx-2" data-bs-toggle="modal" data-bs-target="#loginmodal">
+  Login
+</button>
+ 
+         {%endif%}
+         
+         </div>
+      </div>
+    </nav>
+
+    {% for message in messages %}
+<div class="alert alert-{{message.tags}} mb-0 alert-dismissible fade show" role="alert">
+  <strong>Message: </strong> {{message}}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{%endfor%}
+
+<!-- Button to trigger signup modal -->
+
+
+<!-- Sign up Modal -->
+<div class="modal fade" id="signupmodal" tabindex="-1" aria-labelledby="signupmodal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="signupmodalTitle">Signup form</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+        <form action="/signup/" method="POST"> {% csrf_token %}
+  <div class="mb-3">
+    <label for="username" class="form-label">Username</label>
+    <input type="text" class="form-control" id="username" name="username"  placeholder="Choose a unique username as alphanumeric and lowercase" required>
+  </div>
+  <div class="mb-3">
+    <label for="fname" class="form-label">First Name</label>
+    <input type="text" class="form-control" id="fname" name="fname"  placeholder="First Name" required>
+  </div>
+  <div class="mb-3">
+    <label for="lname" class="form-label">Last Name</label>
+    <input type="text" class="form-control" id="lname" name="lname" placeholder="Last Name" required>
+  </div>
+  <div class="mb-3">
+    <label for="email" class="form-label">Email address</label>
+    <input type="email" class="form-control" id="email" name="email"  placeholder="Email" required>
+  </div>
+  
+  <div class="mb-3">
+    <label for="password1" class="form-label">Choose Password</label>
+    <input type="password" class="form-control" id="password1" name="password1" placeholder="Choose Password" required >
+  </div>
+  <div class="mb-3">
+    <label for="password2" class="form-label">Confirm Password</label>
+    <input type="password" class="form-control" name="password2" id="password2" placeholder="Confirm Password" required>
+  </div>
+  
+  <button type="submit" class="btn btn-primary my-2">Submit</button>
+</form>
+      </div>
+      
+    </div>
+  </div>
+</div>
+<!-- Login Modal -->
+
+<div class="modal fade" id="loginmodal" tabindex="-1" aria-labelledby="loginmodal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="loginmodalTitle">Login form</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+        <form action="/login/" method="POST"> {%csrf_token%}
+  <div class="mb-3">
+    <label for="loginusername" class="form-label">Username</label>
+    <input type="text" class="form-control" id="loginusername" name="loginusername"  placeholder="First Name">
+  </div>
+  
+  
+  <div class="mb-3">
+    <label for="loginpassword" class="form-label">Choose Password</label>
+    <input type="password" class="form-control" id="loginpassword" name="loginpassword" placeholder="Enter your Password" >
+  </div>
+  
+  
+  <button type="submit" class="btn btn-primary my-2">Submit</button>
+</form>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+    {%block body%} {%endblock%}
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+      crossorigin="anonymous"
+    ></script>
+
+    {% block js%}
+
+    {%endblock%}
+  </body>
+</html>

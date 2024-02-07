@@ -1,0 +1,61 @@
+{% extends 'base.html' %} 
+{%load static%}
+{%block title%} BlogHome {%endblock%} 
+{%block css%}
+<link rel="stylesheet" href="{%static "css/bloghome.css" %}">
+{%endblock%} 
+{%block blogactive%} active {%endblock blogactive%} 
+{%block body%}
+<div>
+  <div class="heading">
+    <h2>Coding articles by Icoder</h2>
+  </div>
+  <div class="mine" style="padding-bottom:70px;">
+
+    {%for post in allposts%}
+    <div class="post">
+      <div class="postum">
+
+      <div class="postimg">
+        <img src="/media/{{post.image}}">
+      </div>
+      <div class="article">
+         <div class="head">
+          <h2> <a class="text-dark" href="/blog/{{post.slug}}"> {{post.title}} </a></h2>
+         </div>
+         <div class="content preview">
+           <p>{{post.content|safe| truncatechars:200}}</p>
+         </div>
+         <div class="user">
+            <div class="userimg">
+               <img src="/media/{{post.userimage}}" />
+               <h5>{{post.author}}</h5>
+            </div>
+            <div class="date">
+              <i class="fa-solid fa-clock"></i>
+              <p>{{post.timestamp}}</p>
+            </div>
+         </div>
+          <a href="/blog/{{post.slug}}" class="my-3">
+            Continue reading..</a>
+      </div>
+    </div>
+
+      
+    </div>
+    {%endfor%}
+    
+  </div>
+</div>
+
+{%endblock%}
+
+{%block js%}
+
+<script>
+  let previews=document.getElementsByClassName('preview');
+  Array.from(previews).forEach((element)=>{
+    element.innerHTML=element.innerText;
+  })
+</script>
+{%endblock%}

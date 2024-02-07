@@ -1,0 +1,111 @@
+.contain {
+    margin: 0;
+    padding: 0;
+    max-width: 107rem;
+    height: 30rem;
+}
+
+
+
+.cont {
+
+    margin: 0;
+    overflow: hidden;
+    width: 100%;
+    height: 30rem;
+    position: absolute;
+    
+    >img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.head{
+
+    font-family: 'Playfair Display', serif;
+
+}
+
+.content{
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+}
+
+.userimg {
+
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    gap: 12px;
+
+    >img {
+
+        height: 45px;
+        width: 100%;
+        border-radius: 50%;
+    }
+}
+
+.comm{
+
+    margin-top:1px;
+display: flex;
+    flex-direction: column;
+    gap:5px;
+
+  
+    >.comment{
+
+        >button {
+        
+                margin-left:56px;
+            }
+
+       >p{ margin-left:58px;
+       }
+    }
+    
+
+}
+
+.dic{
+
+    display: flex;
+       
+        align-items: end;
+        gap: 12px;
+        >img {
+        
+                height: 45px;
+             
+                border-radius: 50%;
+            }
+
+}
+
+
+.date {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+
+    >p {
+        margin: 0;
+
+    }
+}
+
+.para{
+    
+    font-family: 'Playfair Display', serif;
+    margin-top:40px;
+    
+}
+
